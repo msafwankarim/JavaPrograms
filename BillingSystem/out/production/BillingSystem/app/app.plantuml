@@ -1,0 +1,266 @@
+@startuml
+
+title __APP's Class Diagram__\n
+
+  namespace app {
+    class app.Bill {
+        - billId : int
+        - dueDate : String
+        - gcv : double
+        - hectoMeters : double
+        - issueDate : String
+        - minBill : double
+        - mmbtu : double
+        - reading : long
+        - tax : double
+        + Bill()
+        + Bill()
+        + Bill()
+        + calculateBill()
+        + getBillId()
+        + getBillTypeString()
+        + getDueDate()
+        + getGcv()
+        + getHectoMeters()
+        + getIssueDate()
+        + getMinBill()
+        + getMmbtu()
+        + getPriceFactor()
+        + getReading()
+        + getTax()
+        + setBillId()
+        + setDueDate()
+        + setGcv()
+        + setHectoMeters()
+        + setIssueDate()
+        + setMinBill()
+        + setReading()
+        + setTax()
+        + toString()
+    }
+  }
+  
+
+  namespace app {
+    class app.BillCalculator {
+        # calculateBtn : JButton
+        # consumerTypeBox : JComboBox<String>
+        # consumers : String[]
+        # error : JLabel
+        # labels : JLabel[]
+        # textFields : JTextField[]
+        + BillCalculator()
+        + calculateBill()
+        + getCalculateBtn()
+        + getConsumerTypeBox()
+        + getConsumers()
+        + getError()
+        + getLabels()
+        + getTextFields()
+        + setCalculateBtn()
+        + setConsumerTypeBox()
+        + setConsumers()
+        + setError()
+        + setLabels()
+        + setTextFields()
+        + setUpGUI()
+        + showError()
+    }
+  }
+  
+
+  namespace app {
+    class app.BillGeneratorDialog {
+        ~ address : JLabel
+        ~ consumerCount : int
+        ~ consumerType : JLabel
+        ~ currentDateTf : JTextField
+        ~ dueDateTf : JTextField
+        ~ id : JLabel
+        ~ name : JLabel
+        - currentIndex : int
+        + BillGeneratorDialog()
+        + actionPerformed()
+        + calculateBill()
+        + clearFields()
+        + load()
+        + loadNext()
+        + loadPrevious()
+        + modifyUI()
+    }
+  }
+  
+
+  namespace app {
+    class app.Client {
+        {static} + main()
+    }
+  }
+  
+
+  namespace app {
+    class app.Consumer {
+        - ID : int
+        - address : String
+        - connectionType : int
+        - name : String
+        + Consumer()
+        + getAddress()
+        + getBill()
+        + getConnectionType()
+        + getConnectionTypeString()
+        + getID()
+        + getName()
+        + loadBill()
+        + setAddress()
+        + setBill()
+        + setConnectionType()
+        + setID()
+        + setName()
+        + toString()
+    }
+  }
+  
+
+  namespace app {
+    class app.DataBase {
+        {static} - conn : Connection
+        {static} - stat : Statement
+        {static} + addConsumerRecord()
+        {static} + fillBillTable()
+        {static} + fillConsumerTable()
+        {static} + fillConsumerTable()
+        {static} + getBillCount()
+        {static} + getBillFor()
+        {static} + getConsumerAt()
+        {static} + getConsumerCount()
+        {static} + isConnected()
+        {static} + isReady()
+        {static} + saveBill()
+        {static} + setUpConnection()
+        {static} + verifyUser()
+    }
+  }
+  
+
+  namespace app {
+    class app.LogIn {
+        + staff : JRadioButton
+        + user : JRadioButton
+        - logInBtn : JButton
+        - logInLabel : JLabel
+        - passField : JPasswordField
+        - passLabel : JLabel
+        - tf : JTextField
+        + LogIn()
+        + displayError()
+        + displayStaffGUI()
+        + displayUserGUI()
+        + getConsumerIDField()
+        + getPassField()
+        + setUpGUI()
+    }
+  }
+  
+
+  namespace app {
+    class app.LogInButtonListener {
+        + LogInButtonListener()
+        + actionPerformed()
+        + verifyLogIn()
+    }
+  }
+  
+
+  namespace app {
+    class app.NewConsumerDialog {
+        - cancel : JButton
+        - consumerLbl : JLabel
+        - consumerType : JComboBox<String>
+        - consumerTypes : String[]
+        - errorLbl : JLabel
+        - labels : JLabel[]
+        - save : JButton
+        - textFields : JTextField[]
+        + NewConsumerDialog()
+        + displayError()
+        + setUpGUI()
+    }
+  }
+  
+
+  namespace app {
+    class app.RadioButtonListener {
+        + RadioButtonListener()
+        + itemStateChanged()
+    }
+  }
+  
+
+  namespace app {
+    class app.StaffForm {
+        ~ addRecordBtn : JButton
+        ~ calculateBtn : JButton
+        ~ error : JLabel
+        ~ generateBtn : JButton
+        ~ jsp : JScrollPane
+        ~ leftPan : JPanel
+        ~ searchBoxTF : JTextField
+        ~ searchBtn : JButton
+        ~ table : JTable
+        ~ tableModel : DefaultTableModel
+        ~ viewRecordBtn : JButton
+        + StaffForm()
+        + actionPerformed()
+        + clearTable()
+        + displayError()
+        + refreshTable()
+        + setUpGUI()
+    }
+  }
+  
+
+  namespace app {
+    class app.UserForm {
+        - consumerId : int
+        + UserForm()
+        + actionPerformed()
+        + loadData()
+        + setUpGUI()
+    }
+  }
+  
+
+  namespace app {
+    class app.ViewConsumerDialog {
+        + ViewConsumerDialog()
+    }
+  }
+  
+
+  app.BillCalculator -up-|> javax.swing.JDialog
+  app.BillGeneratorDialog .up.|> java.awt.event.ActionListener
+  app.BillGeneratorDialog -up-|> app.BillCalculator
+  app.BillGeneratorDialog o-- app.Consumer : data
+  app.Consumer o-- app.Bill : bill
+  app.LogIn -up-|> javax.swing.JFrame
+  app.LogInButtonListener .up.|> java.awt.event.ActionListener
+  app.LogInButtonListener o-- app.LogIn : form
+  app.NewConsumerDialog -up-|> javax.swing.JDialog
+  app.RadioButtonListener .up.|> java.awt.event.ItemListener
+  app.RadioButtonListener o-- app.LogIn : form
+  app.StaffForm .up.|> java.awt.event.ActionListener
+  app.StaffForm -up-|> javax.swing.JFrame
+  app.UserForm .up.|> java.awt.event.ActionListener
+  app.UserForm -up-|> javax.swing.JFrame
+  app.ViewConsumerDialog -up-|> javax.swing.JDialog
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
